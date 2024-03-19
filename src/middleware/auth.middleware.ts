@@ -13,18 +13,20 @@ export class AuthMiddleware implements NestMiddleware {
 
   async use(req: Request, res: Response, next: (error?: any) => void) {
     try {
-      const Authorization = getAuthorization(req.headers)
+      const bearerToken = getAuthorization(req.headers)
 
-      if (Authorization) {
-        const { email } = verify(Authorization, SECRET_KEY!) as DataStoredInToken
+      if (bearerToken) {
+        const { email } = verify(bearerToken, SECRET_KEY!) as DataStoredInToken
 
         const findUser = await Users.findOne({
           where: {
             email: email,
           },
+          relations: { role: true },
         })
 
         if (findUser) {
+          req['user'] = findUser
           next()
         } else {
           this.logger.error('user not found')
