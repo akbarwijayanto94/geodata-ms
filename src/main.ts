@@ -11,7 +11,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Geo Data Management System Document')
     .setVersion('1.0')
-    // .addBearerAuth()
+    .addBearerAuth()
     .build()
 
   const document = SwaggerModule.createDocument(app, config)

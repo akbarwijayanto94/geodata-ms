@@ -3,8 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { dataSourceOptions } from './db/data-source'
+import { AuthMiddleware } from './middleware/auth.middleware'
+import { RolesModule } from './roles/roles.module'
 import { UsersModule } from './users/users.module'
-import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot(dataSourceOptions), UsersModule, RolesModule],
@@ -13,6 +14,6 @@ import { RolesModule } from './roles/roles.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    // consumer.apply(AuthMiddleware).exclude('/').forRoutes('*')
+    consumer.apply(AuthMiddleware).exclude('/', '/users/login').forRoutes('*')
   }
 }
