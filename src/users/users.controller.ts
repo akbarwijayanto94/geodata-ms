@@ -1,6 +1,9 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common'
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common'
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger'
 import { PageDto } from 'src/common/pagination/page.dto'
+import { RoleEnum } from 'src/db/enum'
+import { Roles } from 'src/guards/roles.decorator'
+import { RolesGuard } from 'src/guards/roles.guard'
 import { LoginResponseDto } from './dto/login-response.dto'
 import { LoginDto } from './dto/login.dto'
 import { UsersDto } from './dto/users.dto'
@@ -11,6 +14,7 @@ import { UsersService } from './users.service'
 @Controller('users')
 @ApiTags('Users')
 @ApiBearerAuth()
+@UseGuards(RolesGuard)
 export class UsersController {
   constructor(private readonly service: UsersService) {}
 
@@ -20,6 +24,7 @@ export class UsersController {
     type: Users,
     isArray: true,
   })
+  @Roles(RoleEnum.ADMIN)
   public findAll(@Query() filter: UsersFilter): Promise<PageDto<Users>> {
     return this.service.findAll(filter)
   }

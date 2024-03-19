@@ -9,6 +9,7 @@ export class PageOptionsDto {
   @ApiPropertyOptional({
     type: String,
     enum: Order,
+    default: Order.DESC,
     description: 'Optional property to ordering the data',
   })
   readonly order?: Order = Order.DESC
