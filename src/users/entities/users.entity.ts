@@ -1,5 +1,6 @@
 import { BaseModel } from 'src/common/base.model.entity'
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { Roles } from 'src/roles/entities/roles.entity'
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 import { UsersAccessToken } from './users-access-token.entity'
 
 @Entity()
@@ -24,4 +25,7 @@ export class Users extends BaseModel {
 
   @OneToMany(() => UsersAccessToken, (usersAccesToken) => usersAccesToken.user)
   usersAccessTokens: UsersAccessToken[]
+
+  @ManyToOne(() => Roles, (role) => role.users)
+  role: Roles
 }

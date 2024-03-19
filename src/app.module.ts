@@ -4,9 +4,10 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { dataSourceOptions } from './db/data-source'
 import { UsersModule } from './users/users.module'
+import { RolesModule } from './roles/roles.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dataSourceOptions), UsersModule],
+  imports: [TypeOrmModule.forRoot(dataSourceOptions), UsersModule, RolesModule],
   controllers: [AppController],
   providers: [AppService],
 })
