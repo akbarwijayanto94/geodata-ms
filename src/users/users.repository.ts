@@ -11,10 +11,10 @@ export default class UsersRepository extends Repository<Users> {
   }
 
   async getAll(filter: UsersFilter) {
-    const queryBuilder = Users.createQueryBuilder()
+    const queryBuilder = Users.createQueryBuilder('user').innerJoin('user.role', 'role')
 
     if (filter.email) {
-      queryBuilder.andWhere('email ILIKE :email', {
+      queryBuilder.andWhere('user.email ILIKE :email', {
         email: `%${filter.email}%`,
       })
     }
@@ -22,16 +22,20 @@ export default class UsersRepository extends Repository<Users> {
     if (filter.name) {
       queryBuilder.andWhere(
         new Brackets((qb) => {
-          qb.where('first_name ILIKE :name', {
+          qb.where('user.firstName ILIKE :name', {
             name: `%${filter.name}%`,
-          }).orWhere('last_name ILIKE :name', {
+          }).orWhere('user.lastName ILIKE :name', {
             name: `%${filter.name}%`,
           })
         })
       )
     }
 
-    queryBuilder.orderBy('created_at', filter.order).skip(filter.skip).take(filter.pageSize)
+    if (filter.roles) {
+      queryBuilder.andWhere('role.name = :roleName', { roleName: filter.roles })
+    }
+
+    queryBuilder.orderBy('user.createdAt', filter.order).skip(filter.skip).take(filter.pageSize)
 
     return queryBuilder.getManyAndCount()
   }
