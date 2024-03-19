@@ -10,4 +10,6 @@ export const {
   DB_DATABASE,
   DB_LOGGING,
   DB_SYNC,
+  SECRET_KEY,
+  LIFETIME,
 } = process.env
