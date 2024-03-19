@@ -6,6 +6,8 @@ import { ErrorsEnum } from 'src/common/errors.enum'
 import { DataStoredInToken, TokenData } from 'src/common/interfaces/auth.interface'
 import { PageDto } from 'src/common/pagination/page.dto'
 import { PageMetaDto } from 'src/common/pagination/page.meta.dto'
+import { DeepPartial } from 'typeorm'
+import { LoginResponseDto } from './dto/login-response.dto'
 import { LoginDto } from './dto/login.dto'
 import { UsersDto } from './dto/users.dto'
 import { UsersFilter } from './dto/users.filter'
@@ -27,7 +29,7 @@ export class UsersService {
     return new PageDto(entities, pageMeta)
   }
 
-  async create(usersDto: UsersDto): Promise<Users> {
+  async create(usersDto: UsersDto): Promise<string> {
     const findUser: Users = await this.repository.findOneBy({
       email: usersDto.email,
     })
@@ -35,12 +37,20 @@ export class UsersService {
       throw new HttpException(`This email ${usersDto.email} already exists`, HttpStatus.CONFLICT)
 
     const hashedPassword = await hash(usersDto.password, 10)
-    const createUserData = { ...usersDto, password: hashedPassword }
+    const createUserData: DeepPartial<Users> = {
+      ...usersDto,
+      password: hashedPassword,
+      role: {
+        id: usersDto.roleId,
+      },
+    }
 
-    return this.repository.save(createUserData)
+    await this.repository.save(createUserData)
+
+    return 'Create user successfully'
   }
 
-  async login(loginDto: LoginDto): Promise<{ token: string; isAuthenticated: boolean }> {
+  async login(loginDto: LoginDto): Promise<LoginResponseDto> {
     const findUser: Users = await this.repository.findOneBy({
       email: loginDto.email,
     })
