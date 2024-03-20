@@ -6,4 +6,6 @@ export const ErrorsEnum = {
   AUTH_INVALID_USER_PASS: { 'AUTH-003': 'Invalid username or password' },
 
   ROLES_UNAUTHORIZED: { 'RLS-001': 'Roles is not authorized to access this resource' },
+
+  EMAIL_ADDRESS_EXIST: { 'USR-001': 'This email address already exists' },
 }
