@@ -5,7 +5,7 @@ import { SECRET_KEY } from 'src/common/config'
 import { ErrorsEnum } from 'src/common/errors.enum'
 import { DataStoredInToken } from 'src/common/interfaces/auth.interface'
 import { getAuthorization } from 'src/common/utils/jwt.util'
-import { Users } from 'src/users/entities/users.entity'
+import { Users } from 'src/modules/users/entities/users.entity'
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
@@ -26,6 +26,7 @@ export class AuthMiddleware implements NestMiddleware {
         })
 
         if (findUser) {
+          req['token'] = bearerToken
           req['user'] = findUser
           next()
         } else {

@@ -4,11 +4,12 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { dataSourceOptions } from './db/data-source'
 import { AuthMiddleware } from './middleware/auth.middleware'
-import { RolesModule } from './roles/roles.module'
-import { UsersModule } from './users/users.module'
+import { GeodataModule } from './modules/geodata/geodata.module'
+import { RolesModule } from './modules/roles/roles.module'
+import { UsersModule } from './modules/users/users.module'
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dataSourceOptions), UsersModule, RolesModule],
+  imports: [TypeOrmModule.forRoot(dataSourceOptions), UsersModule, RolesModule, GeodataModule],
   controllers: [AppController],
   providers: [AppService],
 })
