@@ -35,9 +35,11 @@ export class GeodataController {
       properties: {
         title: {
           type: 'string',
+          description: 'Title of data',
         },
         description: {
           type: 'string',
+          description: 'Description of data',
         },
         type: {
           type: 'string',
@@ -52,10 +54,12 @@ export class GeodataController {
             'Feature',
             'FeatureCollection',
           ],
+          description: 'Geo Type Member',
         },
         file: {
           type: 'string',
           format: 'binary',
+          description: 'Geo json file that contain geo data',
         },
       },
     },

@@ -25,6 +25,9 @@ export class GeodataService {
         type: dto.type,
         data: jsonData,
         createdBy: renderFullName(user),
+        user: {
+          id: user.id,
+        },
       })
 
       return result
@@ -47,6 +50,12 @@ export class GeodataService {
         return await GV.isPolygon(jsonData)
       case GeoJsonTypeMemberEnum.MULTI_POLYGON:
         return await GV.isMultiPolygon(jsonData)
+      case GeoJsonTypeMemberEnum.FEATURE:
+        return await GV.isFeature(jsonData)
+      case GeoJsonTypeMemberEnum.FEATURE_COLLECTION:
+        return await GV.isFeatureCollection(jsonData)
+      case GeoJsonTypeMemberEnum.GEOMETRY_COLLECTION:
+        return await GV.isGeometryCollection(jsonData)
       default:
         return
     }
