@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator'
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator'
 
 export class UsersDto {
   @IsEmail()
@@ -35,7 +35,7 @@ export class UsersDto {
   })
   address?: string
 
-  @IsString()
+  @IsNumber()
   @ApiProperty({
     type: Number,
     description: 'ID of Role',
