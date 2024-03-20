@@ -2725,6 +2725,11 @@ forwarded@0.2.0:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.2.0.tgz#2269936428aad4c15c7ebe9779a84bf0b2a81811"
   integrity sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==
 
+fp-ts@^2.3.1:
+  version "2.16.4"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.16.4.tgz#aab69636ee4a4e9849db762e549f65c4cb90f886"
+  integrity sha512-EkV/l6oHaf/w/DlVc5UiqLibqTV1S+idiDdcWQ+UjnLLflL9pZG28ebJfPLor8ifoL8NgEFDIo9fOvHyiSCrJQ==
+
 fresh@0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
@@ -2790,6 +2795,13 @@ gensync@^1.0.0-beta.2:
   version "1.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
+
+geo-valley@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/geo-valley/-/geo-valley-1.0.3.tgz#cada95632edb2a4e737c04d0819bc89be30d1f35"
+  integrity sha512-/LxJOEWpyDgWKoxiCP2x6Xujrj3Mjf4ogkb7ubA+Irspb3t+scJIV8NEGVYi44LBPFE3NaXp4+NTOML0obfEZQ==
+  dependencies:
+    fp-ts "^2.3.1"
 
 get-caller-file@^2.0.5:
   version "2.0.5"
