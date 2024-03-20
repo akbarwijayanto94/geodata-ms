@@ -4,11 +4,12 @@ import { GeodataService } from './geodata.service'
 
 describe('GeodataController', () => {
   let controller: GeodataController
+  let geodataService: GeodataService
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [GeodataController],
-      providers: [GeodataService],
+      providers: [{ provide: GeodataService, useValue: geodataService }],
     }).compile()
 
     controller = module.get<GeodataController>(GeodataController)

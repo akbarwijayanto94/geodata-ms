@@ -4,11 +4,12 @@ import { RolesService } from './roles.service'
 
 describe('RolesController', () => {
   let controller: RolesController
+  let rolesService: RolesService
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [RolesController],
-      providers: [RolesService],
+      providers: [{ provide: RolesService, useValue: rolesService }],
     }).compile()
 
     controller = module.get<RolesController>(RolesController)
