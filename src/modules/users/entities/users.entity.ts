@@ -1,6 +1,6 @@
 import { ApiResponseProperty } from '@nestjs/swagger'
 import { BaseModel } from 'src/common/base.model.entity'
-import { Roles } from 'src/roles/entities/roles.entity'
+import { Roles } from 'src/modules/roles/entities/roles.entity'
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 import { UsersAccessToken } from './users-access-token.entity'
 
