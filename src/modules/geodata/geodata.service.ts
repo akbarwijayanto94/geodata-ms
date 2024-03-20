@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import * as fs from 'fs'
 import * as GV from 'geo-valley'
-import { join } from 'path'
 import { PageDto } from 'src/common/pagination/page.dto'
 import { PageMetaDto } from 'src/common/pagination/page.meta.dto'
 import { renderFullName } from 'src/common/utils/string.util'
@@ -17,7 +15,7 @@ export class GeodataService {
   constructor(private readonly repository: GeodataRepository) {}
 
   async create(dto: CreateGeoDataDto, user: Users, file?: Express.Multer.File) {
-    const data = fs.readFileSync(join(process.cwd(), file.path)).toString()
+    const data = file.buffer.toString('utf8')
     const jsonData = JSON.parse(data)
 
     const validationResponse = await this.validateGeoData(dto.type, jsonData)

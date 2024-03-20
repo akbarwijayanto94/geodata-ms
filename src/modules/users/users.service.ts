@@ -33,8 +33,7 @@ export class UsersService {
     const findUser: Users = await this.repository.findOneBy({
       email: usersDto.email,
     })
-    if (findUser)
-      throw new HttpException(`This email ${usersDto.email} already exists`, HttpStatus.CONFLICT)
+    if (findUser) throw new HttpException(ErrorsEnum.EMAIL_ADDRESS_EXIST, HttpStatus.CONFLICT)
 
     const hashedPassword = await hash(usersDto.password, 10)
     const createUserData: DeepPartial<Users> = {

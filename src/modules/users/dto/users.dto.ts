@@ -16,10 +16,11 @@ export class UsersDto {
   firstName: string
 
   @IsNotEmpty()
-  @ApiProperty({
+  @ApiPropertyOptional({
     type: String,
+    description: 'Optional property',
   })
-  lastName: string
+  lastName?: string
 
   @IsString()
   @IsNotEmpty()

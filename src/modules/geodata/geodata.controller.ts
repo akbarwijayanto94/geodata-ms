@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  FileTypeValidator,
   Get,
+  ParseFilePipe,
   Post,
   Query,
   Req,
@@ -70,12 +72,17 @@ export class GeodataController {
       },
     },
   })
-  @UseInterceptors(FileInterceptor('file', { dest: 'tmp', limits: { fileSize: MAX_FILE_SIZE } }))
+  @UseInterceptors(FileInterceptor('file', { limits: { fileSize: MAX_FILE_SIZE } }))
   @Roles(RoleEnum.ADMIN)
   async create(
     @Body() dto: CreateGeoDataDto,
     @Req() req: AuthenticatedRequest,
-    @UploadedFile() file: Express.Multer.File
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: new RegExp('json$', 'i') })],
+      })
+    )
+    file: Express.Multer.File
   ) {
     return await this.geodataService.create(dto, req.user, file)
   }
