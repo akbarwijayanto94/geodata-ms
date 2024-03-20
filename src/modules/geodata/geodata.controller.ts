@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
+  Query,
   Req,
   UploadedFile,
   UseGuards,
@@ -11,8 +13,12 @@ import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiCreatedResponse, ApiTags } from '@nestjs/swagger'
 import { MAX_FILE_SIZE } from 'src/common'
 import { AuthenticatedRequest } from 'src/common/interfaces/auth.interface'
+import { PageDto } from 'src/common/pagination/page.dto'
+import { RoleEnum } from 'src/db/enum'
+import { Roles } from 'src/guards/roles.decorator'
 import { RolesGuard } from 'src/guards/roles.guard'
 import { CreateGeoDataDto } from './dto/create-geodata.dto'
+import { GeodataFilter } from './dto/geodata.filter'
 import { Geodata } from './entities/geodata.entity'
 import { GeodataService } from './geodata.service'
 
@@ -65,11 +71,23 @@ export class GeodataController {
     },
   })
   @UseInterceptors(FileInterceptor('file', { dest: 'tmp', limits: { fileSize: MAX_FILE_SIZE } }))
+  @Roles(RoleEnum.ADMIN)
   async create(
     @Body() dto: CreateGeoDataDto,
     @Req() req: AuthenticatedRequest,
     @UploadedFile() file: Express.Multer.File
   ) {
     return await this.geodataService.create(dto, req.user, file)
+  }
+
+  @Get()
+  @ApiCreatedResponse({
+    description: 'Fetch data successfully',
+    type: Geodata,
+    isArray: true,
+  })
+  @Roles(RoleEnum.ADMIN, RoleEnum.OPERATION)
+  findAll(@Query() filter: GeodataFilter): Promise<PageDto<Geodata>> {
+    return this.geodataService.findAll(filter)
   }
 }
