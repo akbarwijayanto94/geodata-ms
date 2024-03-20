@@ -2,10 +2,14 @@ import { Injectable } from '@nestjs/common'
 import * as fs from 'fs'
 import * as GV from 'geo-valley'
 import { join } from 'path'
+import { PageDto } from 'src/common/pagination/page.dto'
+import { PageMetaDto } from 'src/common/pagination/page.meta.dto'
 import { renderFullName } from 'src/common/utils/string.util'
 import { GeoJsonTypeMemberEnum } from 'src/db/enum'
 import { Users } from '../users/entities/users.entity'
 import { CreateGeoDataDto } from './dto/create-geodata.dto'
+import { GeodataFilter } from './dto/geodata.filter'
+import { Geodata } from './entities/geodata.entity'
 import GeodataRepository from './geodata.repository'
 
 @Injectable()
@@ -59,5 +63,15 @@ export class GeodataService {
       default:
         return
     }
+  }
+
+  async findAll(filter: GeodataFilter): Promise<PageDto<Geodata>> {
+    const [entities, count] = await this.repository.getAll(filter)
+    const pageMeta = new PageMetaDto({
+      page: filter.page,
+      pageSize: filter.pageSize,
+      itemCount: count,
+    })
+    return new PageDto(entities, pageMeta)
   }
 }
