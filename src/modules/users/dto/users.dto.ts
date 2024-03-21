@@ -6,12 +6,14 @@ export class UsersDto {
   @IsNotEmpty()
   @ApiProperty({
     type: String,
+    description: 'Email address',
   })
   email: string
 
   @IsNotEmpty()
   @ApiProperty({
     type: String,
+    description: 'Email address',
   })
   firstName: string
 
@@ -26,6 +28,7 @@ export class UsersDto {
   @IsNotEmpty()
   @ApiProperty({
     type: String,
+    description: 'Password',
   })
   password: string
 
